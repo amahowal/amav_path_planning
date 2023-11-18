@@ -8,7 +8,11 @@ struct node {
   //   { i = i1; j = j1; g = g1; h = h1; f = f1; }
   //node(const node &NODE) { i = NODE.i; j = NODE.j; g = NODE.g; h = NODE.h; f = NODE.f; }
   int i,j;
+  // A node has a 2D location (i,j)
   double g,h,f;
+  // A node has a value g representing the cost to return to the origin node
+  // A node has a value h representing the heuristic estimation of the cost to reach the goal node
+  // A node has a value f that is the sum of g and h
   //~node(){}
 };
 
@@ -22,8 +26,10 @@ pathPlanning::node::node()
 }
 
 bool pathPlanning::isValid(node nd, vector<node> &openList, vector<node> &closedList){
+  // heap searc
+  // a node is considered "valid" if it is not in the open list or closed listh and it is within bounds
   cout<<"Checking if node is valid..."<<endl;
-  bool valid = true; // heap search
+  bool valid = true;
     for(int k=openList.size()-1;k>=0;k--){
       if(openList[k].i == nd.i && openList[k].j == nd.j){
         if(openList[k].g > nd.g){
@@ -39,6 +45,7 @@ bool pathPlanning::isValid(node nd, vector<node> &openList, vector<node> &closed
         cout<<"Node is in closed list"<<endl;
       }
     }
+    // looks like I hardcoded the bounds here
     if((nd.i < 0) || (nd.i > 35) || (nd.j < 0) || (nd.j > 75)){
       valid = false;
       cout<<"Node is out of range"<<endl;
@@ -142,7 +149,9 @@ void pathPlanning::aStarPlan(int c_i, int c_j, vector<node> &closedList, vector<
     
     double temp = 0.0;
     int idx = 0;
-    
+
+    // Search the open list for the lowest f open node
+    // FIXME: lowest f on the fringe, I think this is breadth first
     for(int k=0;k<openList.size();k++){
       if(k==0){
         temp = openList[k].f;
@@ -166,15 +175,18 @@ void pathPlanning::aStarPlan(int c_i, int c_j, vector<node> &closedList, vector<
       node s; 
       s = genSuccessor(q,i);
       cout<<"Successor generated"<<endl;
+      // Check if successor is the goal
       if(isGoal(s)){
         closedList.push_back(s);
         closedList.push_back(q);
         cout<<"Goal Reached!\n\n\n\n"<<endl;
         return;
       }
+      // Check if it is valid or blocked
       else if(!isValid(s,openList,closedList) || isBlocked(s,obstacleRow,obstacleCol)){
         cout<<"Node is invalid\n\n"<<endl;
       }
+      // Otherwise add it to the fringe
       else {
         cout<<"Adding node to open list..."<<endl;
         openList.push_back(node()); 
