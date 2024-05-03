@@ -18,6 +18,8 @@ find_package(pybind11 CONFIG REQUIRED)
 # this)
 python_add_library(graph MODULE src/graph.cpp WITH_SOABI)
 target_link_libraries(graph PRIVATE pybind11::headers)
+# Link against your C++ libraries
+#target_link_libraries(mymodule PRIVATE libA libB)
 
 # This is passing in the version as a define just as an example
 target_compile_definitions(graph PRIVATE VERSION_INFO=${PROJECT_VERSION})
