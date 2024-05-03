@@ -1,4 +1,4 @@
-# AMAV Path Planning
+# Graph-Based Path Planning
 
 [![Gitter][gitter-badge]][gitter-link]
 
@@ -8,14 +8,9 @@
 | pip builds           | [![Pip Actions Status][actions-pip-badge]][actions-pip-link] |
 
 
-An example project built with [pybind11][] and [scikit-build-core][].
+A project for generating various graphs and testing performance for various graph traversal algorithms. Uses [pybind11][] for C+    + graph traversal and [scikit-build-core][]. Python for generating test graphs.
 
-
-[gitter-badge]:            https://badges.gitter.im/pybind/Lobby.svg
-[gitter-link]:             https://gitter.im/pybind/Lobby
 [actions-badge]:           https://github.com/pybind/scikit_build_example/workflows/Tests/badge.svg
-[actions-conda-link]:      https://github.com/pybind/scikit_build_example/actions?query=workflow%3AConda
-[actions-conda-badge]:     https://github.com/pybind/scikit_build_example/workflows/Conda/badge.svg
 [actions-pip-link]:        https://github.com/pybind/scikit_build_example/actions?query=workflow%3APip
 [actions-pip-badge]:       https://github.com/pybind/scikit_build_example/workflows/Pip/badge.svg
 [actions-wheels-link]:     https://github.com/pybind/scikit_build_example/actions?query=workflow%3AWheels
@@ -23,26 +18,39 @@ An example project built with [pybind11][] and [scikit-build-core][].
 
 ## Test Graph Generation
 
-**Directed Acyclic Graphs (DAGs):** Graphs with directed edges and no cycles. Number of nodes, number of edges, and see for random generation.
-`python generate_and_visualize.py`
+**Directed Acyclic Graphs (DAGs):** Graphs with directed edges and no cycles. Number of nodes, max number of edges, and seed for random generation.
+`python generate_graph.py --nodes 10 --edges 15 --graph_type DAG --weighted --weight_strategy uniform --filename "my_dag.json"`
+`python visualize_graph.py my_dag.json`
+    Generate nodes.
+    Add edges ensuring no cycles are formed. This can be done by maintaining a topological order or using a method that connects nodes from earlier to later in a predefined order.
 
-**Undirected Graphs:** Graphs where edges have no direction.
+**Undirected Graphs:** Graphs where edges have no direction. Number of nodes, max number of edges, and connectivity requirements.
+`python generate_graph.py --nodes 10 --edges 15 --graph_type undirected --weighted --weight_strategy uniform --filename "my_dag.json"`
+`python `
+    Generate nodes.
+    Randomly connect nodes ensuring each edge is bidirectional.
 
-**Directed Cyclic Graphs:** Graphs with directed edges that may contain cycles.
+**Directed Cyclic Graphs:** Graphs with directed edges that may contain cycles. Number of nodes, max number of edges.
+`python generate_graph.py --nodes 10 --edges 15 --graph_type directed_cyclic --weighted --weight_strategy uniform --filename "my_dag.json"`
+`python`
+Similar to DAG, but allow edges that create cycles, ensuring that the graph remains connected.
 
 **Weighted Graphs:** Graphs where edges have associated weights, which can be applied to any of the above types.
+
+## Graph Representations
+adjacency list, adjacency matrix, edge list, etc
 
 ## Installation
 
 - Clone this repository
-- `pip install ./amav_path_planning`
+- `pip install ./path_planning`
 
 ## Test call
 
 ```python
-import amav_path_planning
+import path_planning
 
-amav_path_planning.generate_graph(node_num, generate_strategy)
+path_planning.generate_graph(node_num, generate_strategy)
 ```
 
 ## Files

@@ -1,6 +1,7 @@
 import networkx as nx
-import matplotlib.pyplot as plt
 import random
+import json
+import matplotlib.pyplot as plt
 
 def generate_dag(n_nodes, n_edges):
     G = nx.DiGraph()
@@ -8,8 +9,21 @@ def generate_dag(n_nodes, n_edges):
     while len(G.edges) < n_edges:
         a, b = random.sample(range(n_nodes), 2)
         if not nx.has_path(G, b, a):
-            G.add_edge(a, b)
+            G.add_edge(a, b, weight=random.randint(1, 10))  # Assign random weights for A* usage
     return G
+
+def graph_to_json(G):
+    graph_data = {
+        "nodes": list(G.nodes),
+        "edges": [{"source": u, "target": v, "weight": d['weight']} for u, v, d in G.edges(data=True)]
+    }
+    return json.dumps(graph_data, indent=4)
+
+def save_graph_to_file(G, filename):
+    json_output = graph_to_json(G)
+    with open(filename, 'w') as file:
+        file.write(json_output)
+    print(f"Graph saved to {filename}")
 
 def visualize_graph(G):
     # Layout for visualizing the graph, 'pos' determines node positions in a hierarchical layout
@@ -26,4 +40,6 @@ def visualize_graph(G):
 n_nodes = 10
 n_edges = 15
 dag = generate_dag(n_nodes, n_edges)
+save_graph_to_file(dag, 'dag_graph.json')
 visualize_graph(dag)
+
