@@ -14,10 +14,12 @@ project(
 find_package(Python REQUIRED COMPONENTS Interpreter Development.Module)
 find_package(pybind11 CONFIG REQUIRED)
 
-# Add a library using FindPython's tooling (pybind11 also provides a helper like
-# this)
-python_add_library(graph MODULE src/graph.cpp WITH_SOABI)
-target_link_libraries(graph PRIVATE pybind11::headers)
+# Add C++ libraries
+#add_library(astar SHARED src/astar.cpp)
+
+# 
+pybind11_add_module(graph src/graph.cpp src/astar.cpp)
+#target_link_libraries(graph PRIVATE astar)
 # Link against your C++ libraries
 #target_link_libraries(mymodule PRIVATE libA libB)
 
