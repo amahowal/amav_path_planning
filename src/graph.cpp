@@ -5,7 +5,6 @@
 
 // Include your own C++ library headers
 #include "astar.h"
-#include "LibraryB.h"
 
 int generate(int node_number, int strategy) {
     return 1000*node_number;
@@ -46,16 +45,16 @@ PYBIND11_MODULE(graph, m) {
     )pbdoc");
 
     // Bindings for A*
-    m.def("function_from_lib_a", &function_from_lib_a);
-    py::class_<ClassFromLibA>(m, "ClassFromLibA")
-        .def(py::init<>())
-        .def("method", &ClassFromLibA::method);
+    m.def("generate_nodes", &generate_nodes);
+    // py::class_<ClassFromLibA>(m, "ClassFromLibA")
+    //    .def(py::init<>())
+    //    .def("method", &ClassFromLibA::method);
 
     // Bindings for Library B
-    m.def("function_from_lib_b", &function_from_lib_b);
-    py::class_<ClassFromLibB>(m, "ClassFromLibB")
-        .def(py::init<>())
-        .def("method", &ClassFromLibB::method);
+    // m.def("function_from_lib_b", &function_from_lib_b);
+    // py::class_<ClassFromLibB>(m, "ClassFromLibB")
+    //     .def(py::init<>())
+    //     .def("method", &ClassFromLibB::method);
 
 #ifdef VERSION_INFO
     m.attr("__version__") = MACRO_STRINGIFY(VERSION_INFO);
