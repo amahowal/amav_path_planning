@@ -17,11 +17,9 @@ find_package(pybind11 CONFIG REQUIRED)
 # Add C++ libraries
 #add_library(astar SHARED src/astar.cpp)
 
-# 
+# This adds the pybind module with external source libraries linked
 pybind11_add_module(graph src/graph.cpp src/astar.cpp)
 #target_link_libraries(graph PRIVATE astar)
-# Link against your C++ libraries
-#target_link_libraries(mymodule PRIVATE libA libB)
 
 # This is passing in the version as a define just as an example
 target_compile_definitions(graph PRIVATE VERSION_INFO=${PROJECT_VERSION})

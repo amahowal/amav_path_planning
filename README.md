@@ -19,20 +19,20 @@ A project for generating various graphs and testing performance for various grap
 ## Test Graph Generation
 
 **Directed Acyclic Graphs (DAGs):** Graphs with directed edges and no cycles. Number of nodes, max number of edges, and seed for random generation.
-`python generate_graph.py --nodes 10 --edges 15 --graph_type DAG --weighted --weight_strategy uniform --filename "my_dag.json"`
-`python visualize_graph.py my_dag.json`
+`python generate_graph.py --nodes 10 --edges 15 --graph_type DAG --weighted --weight_strategy uniform --filename "dag.json"`
+`python visualize_graph.py dag.json`
     Generate nodes.
     Add edges ensuring no cycles are formed. This can be done by maintaining a topological order or using a method that connects nodes from earlier to later in a predefined order.
 
 **Undirected Graphs:** Graphs where edges have no direction. Number of nodes, max number of edges, and connectivity requirements.
-`python generate_graph.py --nodes 10 --edges 15 --graph_type undirected --weighted --weight_strategy uniform --filename "my_dag.json"`
-`python `
+`python generate_graph.py --nodes 10 --edges 15 --graph_type undirected --weighted --weight_strategy uniform --filename "undirected.json"`
+`python visualize_graph.py undirected.json`
     Generate nodes.
     Randomly connect nodes ensuring each edge is bidirectional.
 
 **Directed Cyclic Graphs:** Graphs with directed edges that may contain cycles. Number of nodes, max number of edges.
-`python generate_graph.py --nodes 10 --edges 15 --graph_type directed_cyclic --weighted --weight_strategy uniform --filename "my_dag.json"`
-`python`
+`python generate_graph.py --nodes 10 --edges 15 --graph_type directed_cyclic --weighted --weight_strategy uniform --filename "directed_cyclic.json"`
+`python visualize_graph.py undirected.json`
 Similar to DAG, but allow edges that create cycles, ensuring that the graph remains connected.
 
 **Weighted Graphs:** Graphs where edges have associated weights, which can be applied to any of the above types.
@@ -43,14 +43,14 @@ adjacency list, adjacency matrix, edge list, etc
 ## Installation
 
 - Clone this repository
-- `pip install ./path_planning`
+- `pip install .`
+- `pytest`
 
-## Test call
+## Example call
 
 ```python
-import path_planning
-
-path_planning.generate_graph(node_num, generate_strategy)
+from path_planning import graph
+graph.generate_nodes(1,5)
 ```
 
 ## Files
@@ -61,7 +61,7 @@ necessary. The necessary files are:
 * `pyproject.toml`: The Python project file
 * `CMakeLists.txt`: The CMake configuration file
 * `src/main.cpp`: The source file for the C++ build
-* `src/scikit_build_example/__init__.py`: The Python portion of the module. The root of the module needs to be `<package_name>`, `src/<package_name>`, or `python/<package_name>` to be auto-discovered.
+* `src/path_planning/__init__.py`: The Python portion of the module. The root of the module needs to be `<package_name>`, `src/<package_name>`, or `python/<package_name>` to be auto-discovered.
 
 These files are also expected and highly recommended:
 
