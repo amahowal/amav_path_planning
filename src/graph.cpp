@@ -18,7 +18,7 @@ namespace py = pybind11;
 
 PYBIND11_MODULE(graph, m) {
     m.doc() = R"pbdoc(
-        Pybind11 example plugin
+        Path Planning
         -----------------------
 
         .. currentmodule:: path_planning
@@ -28,7 +28,8 @@ PYBIND11_MODULE(graph, m) {
 
            generate
            describe
-           visualize
+           generate_nodes
+           describe_nodes
     )pbdoc";
 
     m.def("generate", &generate, R"pbdoc(
